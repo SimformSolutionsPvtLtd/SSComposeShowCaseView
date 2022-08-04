@@ -87,7 +87,10 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
     // Animation setup for rounded animation
     val animationSpec = infiniteRepeatable<Float>(
         animation = tween(2000, easing = FastOutLinearInEasing),
-        repeatMode = RepeatMode.Restart
+        repeatMode = if (targets.showCaseType == ShowcaseType.ANIMATED_RECTANGLE)
+            RepeatMode.Reverse
+        else
+            RepeatMode.Restart
     )
     val animaTables = listOf(
         remember { Animatable(0f) },
@@ -208,7 +211,26 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
              * Rectangle ShowCaseView with animation
              */
             ShowcaseType.ANIMATED_RECTANGLE -> {
-                // TODO: Implement Animation for Rectangle showcase
+                drawRect(
+                    Color.Black.copy(alpha = 0.8f),
+                    size = Size(size.width + 40f, size.height + 40f),
+                    style = Fill,
+                )
+                drawRect(
+                    Color.White,
+                    size = Size(rectSize.width + 15f, rectSize.height + 15f),
+                    style = Fill,
+                    topLeft = Offset(xOffset - 8, yOffset - 8),
+                    blendMode = BlendMode.Clear
+                )
+                dys.forEach { dy ->
+                    drawRect(
+                        color = Color.White.copy(alpha = 0.8f),
+                        size = Size(rectSize.width * dy * 2, rectSize.height * dy * 2),
+                        topLeft = Offset(xOffset - 12, yOffset - 12),
+                        alpha = 1 - dy
+                    )
+                }
             }
         }
     }

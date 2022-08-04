@@ -109,7 +109,7 @@ fun UserProfile(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) 
                 coordinates = it,
                 title = "Profile",
                 subTitle = "User Profile with name and picture",
-                showCaseType = ShowcaseType.SIMPLE_RECTANGLE
+                showCaseType = ShowcaseType.ANIMATED_RECTANGLE
             )
         }) {
         Image(
@@ -133,7 +133,7 @@ fun UserProfile(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) 
                         coordinates = it,
                         title = "More options",
                         subTitle = "Click here to see options",
-                        showCaseType = ShowcaseType.SIMPLE_ROUNDED
+                        showCaseType = ShowcaseType.ANIMATED_RECTANGLE
                     )
                 }
         )
@@ -173,7 +173,7 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                     coordinates = it,
                                     title = "LIke Post",
                                     subTitle = "Click here to like post",
-                                    showCaseType = ShowcaseType.SIMPLE_ROUNDED
+                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE
                                 )
                             }
                     )
@@ -191,7 +191,7 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                     coordinates = it,
                                     title = "Comment button",
                                     subTitle = "Click here to add comment on post",
-                                    showCaseType = ShowcaseType.SIMPLE_ROUNDED
+                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE
                                 )
                             }
                     )
@@ -209,7 +209,7 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                     coordinates = it,
                                     title = "Share button",
                                     subTitle = "Click here to Share post with others",
-                                    showCaseType = ShowcaseType.SIMPLE_ROUNDED
+                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE
                                 )
                             }
                     )
@@ -230,7 +230,7 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                 coordinates = it,
                                 title = "Save button",
                                 subTitle = "Click here to save post",
-                                showCaseType = ShowcaseType.SIMPLE_ROUNDED
+                                showCaseType = ShowcaseType.ANIMATED_RECTANGLE
                             )
                         }
                 )
