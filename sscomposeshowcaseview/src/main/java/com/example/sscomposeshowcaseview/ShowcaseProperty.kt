@@ -10,5 +10,7 @@ data class ShowcaseProperty(
     val titleColor: Color = Color.White,
     val subTitle: String,
     val subTitleColor: Color = Color.White,
-    val showCaseType: ShowcaseType = ShowcaseType.SIMPLE_ROUNDED
+    val showCaseType: ShowcaseType = ShowcaseType.SIMPLE_ROUNDED,
+    val blurOpacity: Float = 0.8f,
+    val showcaseDelay: Long = 2000
 )

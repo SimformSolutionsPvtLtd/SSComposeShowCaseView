@@ -36,11 +36,14 @@ import androidx.compose.ui.layout.boundsInRoot
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import java.util.Timer
+import kotlin.concurrent.schedule
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -53,8 +56,11 @@ import kotlin.math.sqrt
 @Composable
 fun ShowCaseTarget(
     targets: SnapshotStateMap<String, ShowcaseProperty>,
+    isEnableAutoShowCase: Boolean = false,
+    key: String,
     onShowCaseCompleted: () -> Unit
 ) {
+    val preferences = Preferences(context = LocalContext.current)
     val uniqueTargets = targets.values.sortedBy { it.index }
     var currentTargetIndex by remember { mutableStateOf(0) }
     val currentTarget = if (uniqueTargets.isNotEmpty() && currentTargetIndex < uniqueTargets.size)
@@ -62,10 +68,15 @@ fun ShowCaseTarget(
     else
         null
 
+    if (preferences.getShowing(key)) {
+        return
+    }
+
     currentTarget?.let {
-        IntroShowCase(targets = it) {
+        IntroShowCase(targets = it, isAutomaticShowcase = isEnableAutoShowCase) {
             if (++currentTargetIndex >= uniqueTargets.size) {
                 onShowCaseCompleted()
+                preferences.show(key)
             }
         }
     }
@@ -77,7 +88,9 @@ fun ShowCaseTarget(
  * @param onShowCaseCompleted do the needful on completing showcase view.
  */
 @Composable
-fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
+fun IntroShowCase(
+    targets: ShowcaseProperty, isAutomaticShowcase: Boolean = false, onShowCaseCompleted: () -> Unit
+) {
     val targetRect = targets.coordinates.boundsInRoot()
     val targetRadius = targetRect.maxDimension / 2f + 20
     val xOffset = targetRect.topLeft.x
@@ -139,9 +152,15 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(targets) {
-                detectTapGestures { tapOffset ->
-                    if (targetRect.contains(tapOffset)) {
+                if (isAutomaticShowcase) {
+                    Timer(true).schedule(targets.showcaseDelay) {
                         onShowCaseCompleted()
+                    }
+                } else {
+                    detectTapGestures { tapOffset ->
+                        if (targetRect.contains(tapOffset)) {
+                            onShowCaseCompleted()
+                        }
                     }
                 }
             }
@@ -153,7 +172,7 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
              */
             ShowcaseType.SIMPLE_ROUNDED -> {
                 drawCircle(
-                    color = Color.Black.copy(alpha = 0.8f),
+                    color = Color.Black.copy(alpha = targets.blurOpacity),
                     radius = size.maxDimension,
                     alpha = 0.9f
                 )
@@ -169,7 +188,7 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
              */
             ShowcaseType.SIMPLE_RECTANGLE -> {
                 drawRect(
-                    Color.Black.copy(alpha = 0.8f),
+                    Color.Black.copy(alpha = targets.blurOpacity),
                     size = Size(size.width + 40f, size.height + 40f),
                     style = Fill,
                 )
@@ -189,7 +208,7 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
                     color = Color.Black,
                     center = outerOffset,
                     radius = outerRadius * outerAnimaTable.value,
-                    alpha = 0.9f
+                    alpha = targets.blurOpacity
                 )
                 // draw circle with animation
                 dys.forEach { dy ->
@@ -212,7 +231,7 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
              */
             ShowcaseType.ANIMATED_RECTANGLE -> {
                 drawRect(
-                    Color.Black.copy(alpha = 0.8f),
+                    Color.Black.copy(alpha = targets.blurOpacity),
                     size = Size(size.width + 40f, size.height + 40f),
                     style = Fill,
                 )
@@ -225,7 +244,7 @@ fun IntroShowCase(targets: ShowcaseProperty, onShowCaseCompleted: () -> Unit) {
                 )
                 dys.forEach { dy ->
                     drawRect(
-                        color = Color.White.copy(alpha = 0.8f),
+                        color = Color.White.copy(alpha = targets.blurOpacity),
                         size = Size(rectSize.width * dy * 2, rectSize.height * dy * 2),
                         topLeft = Offset(xOffset - 12, yOffset - 12),
                         alpha = 1 - dy
