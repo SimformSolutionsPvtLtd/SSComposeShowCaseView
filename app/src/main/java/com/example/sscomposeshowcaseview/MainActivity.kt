@@ -46,6 +46,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +70,11 @@ private fun ShowcaseExample() {
         }
     }
 
-    ShowCaseTarget(targets = targets) {
-        Toast.makeText(context, "Thank you! Intro Completed", Toast.LENGTH_SHORT)
-            .show()
+    ShowCaseTarget(targets = targets, isEnableAutoShowCase = true, key = "Dashboard") {
+        CoroutineScope(Dispatchers.Main).launch {
+            Toast.makeText(context, "Thank you! Intro Completed", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }
 
@@ -133,7 +138,8 @@ fun UserProfile(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) 
                         coordinates = it,
                         title = "More options",
                         subTitle = "Click here to see options",
-                        showCaseType = ShowcaseType.ANIMATED_RECTANGLE
+                        showCaseType = ShowcaseType.ANIMATED_RECTANGLE,
+                        showcaseDelay = 5000
                     )
                 }
         )
@@ -173,7 +179,8 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                     coordinates = it,
                                     title = "LIke Post",
                                     subTitle = "Click here to like post",
-                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE
+                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE,
+                                    showcaseDelay = 500
                                 )
                             }
                     )
@@ -191,7 +198,8 @@ fun UserPost(post: Item, target: SnapshotStateMap<String, ShowcaseProperty>) {
                                     coordinates = it,
                                     title = "Comment button",
                                     subTitle = "Click here to add comment on post",
-                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE
+                                    showCaseType = ShowcaseType.ANIMATED_RECTANGLE,
+                                    showcaseDelay = 1000
                                 )
                             }
                     )
