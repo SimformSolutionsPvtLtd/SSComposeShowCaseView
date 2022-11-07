@@ -126,7 +126,7 @@ showcase view feature with customised delay and opacity attributes.
 | Attribute | Description | Default |
 | --- | --- | --- |
 | `index` | Set index to show showcase one by one | None |
-| `coordinates` | Componants coordinates for showcase | None |
+| `coordinates` | Components coordinates for showcase | None |
 | `title` | Showcase title | None |
 | `titleColor` | Color for title | `White` |
 | `subTitle` | Showcase subtitle | None |
