@@ -1,4 +1,4 @@
-package com.example.sscomposeshowcaseview
+package com.sscomposeshowcaseview
 
 /**
  * Select type of showcase
