@@ -1,4 +1,4 @@
-package com.example.sscomposeshowcaseview
+package com.sscomposeshowcaseview
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutLinearInEasing

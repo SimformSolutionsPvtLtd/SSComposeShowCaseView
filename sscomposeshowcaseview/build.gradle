@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -32,6 +33,19 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.1.1'
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = "com.github.SimformSolutionsPvtLtd"
+                artifactId = "SSComposeShowCaseView"
+                version = "1.0"
+                from components.release
+            }
+        }
     }
 }
 
