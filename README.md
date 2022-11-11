@@ -59,7 +59,7 @@ showcase view feature with customised delay and opacity attributes.
 
   ```
   dependencies {
-      implementation 'com.github.simformsolutions:SSComposeShowCaseView:1.0'
+      implementation 'com.github.SimformSolutionsPvtLtd:SSComposeShowCaseView:1.0'
   }
   ```
   
