@@ -1,4 +1,4 @@
-package com.example.sscomposeshowcaseview
+package com.sscomposeshowcaseview
 
 import android.content.Context
 import android.content.SharedPreferences

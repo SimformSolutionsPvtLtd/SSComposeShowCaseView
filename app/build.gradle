@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.sscomposeshowcaseview"
+        applicationId "com.sscomposeshowcaseview"
         minSdk 21
         targetSdk 33
         versionCode 1

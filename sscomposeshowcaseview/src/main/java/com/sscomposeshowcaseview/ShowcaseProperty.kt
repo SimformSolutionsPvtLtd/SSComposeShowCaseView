@@ -1,4 +1,4 @@
-package com.example.sscomposeshowcaseview
+package com.sscomposeshowcaseview
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.LayoutCoordinates
